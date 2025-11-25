@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employment Pass (EP) Renewal Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .file-upload-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .file-upload-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            background: white;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .file-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        .info-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            cursor: help;
+            margin-left: 5px;
+        }
+
+        .detailed-instructions {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .detailed-instructions h4 {
+            margin-bottom: 10px;
+            color: #1976D2;
+        }
+
+        .detailed-instructions ol {
+            margin-left: 20px;
+        }
+
+        .detailed-instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employment Pass (EP) Renewal Form</h1>
+        <p class="subtitle">Please fill out all required fields accurately</p>
+
+        <div class="success-message" id="successMessage">
+            Your form has been submitted successfully! We will process your EP renewal request.
+        </div>
+
+        <form id="epRenewalForm">
+            <!-- Initial Question -->
+            <div class="form-group">
+                <label>Do you wish to renew your Employment Pass (EP)? <span class="required">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="renewYes" name="renewEP" value="yes" required>
+                        <label for="renewYes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="renewNo" name="renewEP" value="no" required>
+                        <label for="renewNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Questions (Hidden initially) -->
+            <div id="additionalQuestions" class="hidden">
+                <!-- Dependents Question -->
+                <div class="form-group">
+                    <label>Do you have dependents? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="dependentsYes" name="dependents" value="yes">
+                            <label for="dependentsYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="dependentsNo" name="dependents" value="no">
+                            <label for="dependentsNo">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label for="email">Which email address should we use for the EP renewal process? <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com">
+                </div>
+
+                <!-- BMS Number -->
+                <div class="form-group">
+                    <label for="bmsNumber">BMS Number <span class="required">*</span></label>
+                    <input type="text" id="bmsNumber" name="bmsNumber" placeholder="Enter your BMS number">
+                </div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">Full name according to passport <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" placeholder="As shown on your passport">
+                </div>
+
+                <!-- Passport Number -->
+                <div class="form-group">
+                    <label for="passportNumber">Passport number <span class="required">*</span></label>
+                    <input type="text" id="passportNumber" name="passportNumber" placeholder="e.g., A12345678">
+                </div>
+
+                <!-- Passport Expiry Date -->
+                <div class="form-group">
+                    <label for="passportExpiry">Passport expiry date <span class="required">*</span></label>
+                    <input type="date" id="passportExpiry" name="passportExpiry">
+                </div>
+
+                <!-- Passport Issue Country -->
+                <div class="form-group">
+                    <label for="issueCountry">Passport issue country <span class="required">*</span></label>
+                    <input type="text" id="issueCountry" name="issueCountry" placeholder="e.g., Malaysia">
+                </div>
+
+                <!-- Passport Date of Issue -->
+                <div class="form-group">
+                    <label for="passportIssue">Passport date of issue <span class="required">*</span></label>
+                    <input type="date" id="passportIssue" name="passportIssue">
+                </div>
+
+                <!-- Income Tax Number -->
+                <div class="form-group">
+                    <label for="taxNumber">Income tax number (prefix IG) <span class="required">*</span></label>
+                    <input type="text" id="taxNumber" name="taxNumber" placeholder="e.g., IG1234567890">
+                </div>
+
+                <!-- Location for Passport Handover -->
+                <div class="form-group">
+                    <label for="location">Location for passport handover/collection <span class="required">*</span></label>
+                    <select id="location" name="location">
+                        <option value="">Select location</option>
+                        <option value="office">Office</option>
+                        <option value="home">Home Address</option>
+                        <option value="courier">Courier Service</option>
+                    </select>
+                </div>
+
+                <!-- File Upload Sections -->
+                <div class="file-upload-section">
+                    <h3>Passport Copy <span class="required">*</span></h3>
+                    <div class="instructions">
+                        <strong>Requirements:</strong>
+                        <ul>
+                            <li>Must be PDF format, color scan</li>
+                            <li>File size must be less than 10MB</li>
+                            <li>All pages included with minimum 6 empty pages</li>
+                            <li>Two facing passport pages per PDF page</li>
+                            <li>Show all four sides (top, bottom, left, right)</li>
+                        </ul>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="passportCopy" name="passportCopy" accept=".pdf">
+                        <div class="file-info">Accepted format: PDF (Max size: 10MB)</div>
+                        <div class="error-message" id="passportCopyError"></div>
+                    </div>
+                </div>
+
+                <div class="file-upload-section">
+                    <h3>Immigration Contract Letter <span class="required">*</span></h3>
+                    <div class="instructions">
+                        <strong>Requirements:</strong>
+                        <ul>
+                            <li>PDF format, color scan</li>
+                            <li>Black signature required</li>
+                            <li>File size must be less than 10MB</li>
+                        </ul>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="contractLetter" name="contractLetter" accept=".pdf">
+                        <div class="file-info">Accepted format: PDF (Max size: 10MB)</div>
+                        <div class="error-message" id="contractLetterError"></div>
+                    </div>
+                </div>
+
+                <div class="file-upload-section">
+                    <h3>Latest E-Filing Slip or E-Pin Slip <span class="required">*</span></h3>
+                    <div class="detailed-instructions">
+                        <h4>For E-Filing Slip:</h4>
+                        <ol>
+                            <li>Go to the login page: <a href="https://ez.hasil.gov.my/CI/Login.aspx" target="_blank">https://ez.hasil.gov.my/CI/Login.aspx</a></li>
+                            <li>Navigate to: E-Filing → E-form → E-form Status → click Acknowledgement Receipt</li>
+                            <li>Click "Print Acknowledgement" and download your E-filing slip</li>
+                            <li>Make sure it is the latest year slip</li>
+                            <li><strong>If you don't have tax payable amount</strong> in the e-filing slip → kindly provide E-filing slip only. The amount stated should be (TAX PAID IN EXCESS)</li>
+                            <li><strong>If you have tax payable amount</strong> in the e-filing slip → kindly provide E-filing slip + Tax receipt payment. The amount stated should be (TAX PAYABLE)</li>
+                        </ol>
+                        <h4 style="margin-top: 15px;">For E-Pin Slip:</h4>
+                        <ol>
+                            <li>If you have not filed any e-filing yet, you can register your Income Tax account through LHDNM official website: <a href="https://edaftar.hasil.gov.my/" target="_blank">https://edaftar.hasil.gov.my/</a></li>
+                            <li>OR go to Level 4, LHDNM/Tax Office at Lebuh Pantai, Penang and inform the officer you would like to get an E-pin Number for E-filing</li>
+                        </ol>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="eFilingSlip" name="eFilingSlip" accept=".pdf">
+                        <div class="file-info">Accepted format: PDF (Max size: 10MB)</div>
+                        <div class="error-message" id="eFilingSlipError"></div>
+                    </div>
+                </div>
+
+                <div class="file-upload-section">
+                    <h3>Additional Documents for Position Change (Optional)</h3>
+                    <div class="instructions">
+                        <strong>Only required if your position has changed</strong>
+                    </div>
+                    
+                    <label style="margin-top: 15px;">Resume/CV in English (PDF)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="resume" name="resume" accept=".pdf">
+                        <div class="file-info">Accepted format: PDF (Max size: 10MB)</div>
+                        <div class="error-message" id="resumeError"></div>
+                    </div>
+
+                    <label style="margin-top: 15px;">Professional/Academic Certificates (PDF, color)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="certificates" name="certificates" accept=".pdf">
+                        <div class="file-info">Accepted format: PDF (Max size: 10MB)</div>
+                        <div class="error-message" id="certificatesError"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px;">Submitting your form...</p>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Form elements
+        const form = document.getElementById('epRenewalForm');
+        const renewYes = document.getElementById('renewYes');
+        const renewNo = document.getElementById('renewNo');
+        const additionalQuestions = document.getElementById('additionalQuestions');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const successMessage = document.getElementById('successMessage');
+
+        // File size limit in bytes (10MB)
+        const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+        // Show/hide additional questions based on initial selection
+        renewYes.addEventListener('change', function() {
+            if (this.checked) {
+                additionalQuestions.classList.remove('hidden');
+                makeFieldsRequired(true);
+            }
+        });
+
+        renewNo.addEventListener('change', function() {
+            if (this.checked) {
+                additionalQuestions.classList.add('hidden');
+                makeFieldsRequired(false);
+            }
+        });
+
+        // Function to make fields required or optional
+        function makeFieldsRequired(required) {
+            const requiredFields = [
+                'dependents', 'email', 'bmsNumber', 'fullName', 
+                'passportNumber', 'passportExpiry', 'issueCountry', 
+                'passportIssue', 'taxNumber', 'location',
+                'passportCopy', 'contractLetter', 'eFilingSlip'
+            ];
+
+            requiredFields.forEach(fieldName => {
+                const field = document.querySelector(`[name="${fieldName}"]`);
+                if (field) {
+                    if (required) {
+                        field.setAttribute('required', 'required');
+                    } else {
+                        field.removeAttribute('required');
+                    }
+                }
+            });
+        }
+
+        // File validation function
+        function validateFile(fileInput, errorElement) {
+            const file = fileInput.files[0];
+            if (!file) return true; // Optional files
+
+            // Check if required file is missing
+            if (fileInput.hasAttribute('required') && !file) {
+                errorElement.textContent = 'This file is required.';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            // Check file type
+            if (file.type !== 'application/pdf') {
+                errorElement.textContent = 'Only PDF files are allowed.';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            // Check file size
+            if (file.size > MAX_FILE_SIZE) {
+                errorElement.textContent = 'File size must be less than 10MB.';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Validate multiple files
+        function validateMultipleFiles(fileInput, errorElement) {
+            const files = fileInput.files;
+            if (files.length === 0) return true; // Optional
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                if (file.type !== 'application/pdf') {
+                    errorElement.textContent = 'Only PDF files are allowed.';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+
+                if (file.size > MAX_FILE_SIZE) {
+                    errorElement.textContent = `File "${file.name}" exceeds 10MB limit.`;
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+            }
+
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Add file validation listeners
+        const fileInputs = [
+            { input: 'passportCopy', error: 'passportCopyError' },
+            { input: 'contractLetter', error: 'contractLetterError' },
+            { input: 'eFilingSlip', error: 'eFilingSlipError' },
+            { input: 'resume', error: 'resumeError' }
+        ];
+
+        fileInputs.forEach(item => {
+            const input = document.getElementById(item.input);
+            const error = document.getElementById(item.error);
+            if (input) {
+                input.addEventListener('change', () => validateFile(input, error));
+            }
+        });
+
+        // Validate certificates (multiple files)
+        const certificatesInput = document.getElementById('certificates');
+        const certificatesError = document.getElementById('certificatesError');
+        certificatesInput.addEventListener('change', () => 
+            validateFile(certificatesInput, certificatesError)
+        );
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate all files before submission
+            let allFilesValid = true;
+            
+            if (renewYes.checked) {
+                fileInputs.forEach(item => {
+                    const input = document.getElementById(item.input);
+                    const error = document.getElementById(item.error);
+                    if (!validateFile(input, error)) {
+                        allFilesValid = false;
+                    }
+                });
+
+                // Validate certificates as single file
+                if (!validateFile(certificatesInput, certificatesError)) {
+                    allFilesValid = false;
+                }
+            }
+
+            if (!allFilesValid) {
+                alert('Please fix all file validation errors before submitting.');
+                return;
+            }
+
+            // Prepare form data
+            const formData = new FormData(form);
+
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            submitBtn.disabled = true;
+
+            try {
+                // Power Automate Flow endpoint (replace with your actual endpoint)
+                const flowEndpoint = 'https://prod-xx.eastus.logic.azure.com:443/workflows/xxxxx/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YOUR_SIGNATURE';
+
+                // Convert FormData to JSON for Power Automate
+                const formDataObj = {};
+                
+                // Add text fields
+                for (let [key, value] of formData.entries()) {
+                    if (!(value instanceof File)) {
+                        formDataObj[key] = value;
+                    }
+                }
+
+                // Handle files - convert to base64 for Power Automate
+                const fileFields = ['passportCopy', 'contractLetter', 'eFilingSlip', 'resume', 'certificates'];
+                for (let fieldName of fileFields) {
+                    const fileInput = document.getElementById(fieldName);
+                    if (fileInput && fileInput.files[0]) {
+                        const file = fileInput.files[0];
+                        const base64 = await fileToBase64(file);
+                        formDataObj[fieldName] = {
+                            name: file.name,
+                            content: base64,
+                            contentType: file.type
+                        };
+                    }
+                }
+
+                // Submit to Power Automate
+                const response = await fetch(flowEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formDataObj)
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    form.reset();
+                    additionalQuestions.classList.add('hidden');
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error('Submission failed');
+                }
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('There was an error submitting your form. Please try again or contact support.');
+            } finally {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Helper function to convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    // Remove the data URL prefix (e.g., "data:application/pdf;base64,")
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Auto-format tax number with IG prefix
+        const taxNumberInput = document.getElementById('taxNumber');
+        taxNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            if (!value.startsWith('IG') && value.length > 0) {
+                e.target.value = 'IG' + value;
+            }
+        });
+    </script>
+</body>
+</html>
